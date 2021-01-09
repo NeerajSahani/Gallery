@@ -1,0 +1,51 @@
+<html lang="en">
+<head>
+    {% load bootstrap4 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+    <title>Tag Form</title>
+    <style>
+        body {
+            background-color: #1d1d1d !important;
+            font-family: "Asap", sans-serif;
+            color: #989898;
+            margin: 10px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+<div class="container col-lg-10 mt-5 text-secondary">
+    <div class="card">
+        <div class="card-header text-secondary text-center form-header">
+            <b>Tag Form</b>
+        </div>
+        <div class="card-body bg-dark">
+            <p><span style="color: red"> * </span> fields are required</p>
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {% for field in form %}
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">{{ field.label_tag }}
+                            {% if field.field.required %}<span style="color: red">*</span>{% endif %}
+                        </label>
+                        <div class="col-sm-10">
+                            {{ field }}
+                            {% if field.errors %}
+                                <h6 style="color: red">{{ field.errors }}</h6>
+                                {% if field.help_text %}
+                                    <span class="fa fa-info-circle" style="color: #c82333"></span>
+                                    <h6 style="color: #c82333">{{ field.help_text }}</h6>
+                                {% endif %}
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endfor %}
+                <input class="btn btn-outline-success" type="submit" value="Submit">
+                <input class="btn btn-outline-danger" type="reset" value="Reset  ">
+            </form>
+        </div>
+    </div>
+</div>
+
+</body>

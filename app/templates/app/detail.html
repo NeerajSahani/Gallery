@@ -1,0 +1,32 @@
+{% extends 'base.html' %} {% block title %} View Image {% endblock %}
+{% block body %}
+    <div class="mt-5">
+        <div class="row">
+
+            <div class="col-md-10">
+                <div class="row">
+                    <img class="d-block w-100" src="{{ image.image.url }}" alt="{{ image.title }}"/>
+                </div>
+                <div class="row mt-4 justify-content-center">
+                    <a href="{% url 'gallery:rotate-image' slug=image.slug angle=90 %}">
+                        <button type="button" class="btn btn-dark"><i class="fas fa-undo"></i></button>
+                    </a>
+                    <a href="{% url 'gallery:rotate-image' slug=image.slug angle=270 %}">
+                        <button type="button" class="btn btn-dark"><i class="fas fa-redo"></i></button>
+                    </a>
+                </div>
+            </div>
+
+            <div class="col-md-2">
+                {% for tag in image.tag.all %}
+                    <a href="{% url 'gallery:search' %}?s={{ tag }}">
+                <span class="badge badge-{% cycle 'success' 'warning' 'danger' 'info' 'dark' 'primary' 'secondary' %}">
+                    {{ tag.tag }} [{{ tag.popularity }}]
+                </span>
+                    </a>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
